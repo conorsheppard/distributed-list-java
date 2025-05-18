@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+docker run -d --rm --name redis -p 6379:6379 redis
+mvn compile dependency:build-classpath -Dmdep.outputFile=classpath.txt
+classpath=$(cat classpath.txt):target/classes
+jshell --class-path "$classpath" shell/startup.jsh
