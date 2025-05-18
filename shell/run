@@ -9,7 +9,7 @@ if ! docker ps --format '{{.Names}}' | grep -q "^${container_name}$"; then
         echo "Starting existing Redis container..."
         docker start $container_name
     else
-        echo "Running new Redis container..."
+        echo "Booting new Redis container..."
         docker run -d --rm --name $container_name -p 6379:6379 redis
     fi
 else
