@@ -1,6 +1,21 @@
 #!/bin/zsh
 
-docker run -d --rm --name redis -p 6379:6379 redis
+container_name="redis"
+
+# Check if running
+if ! docker ps --format '{{.Names}}' | grep -q "^${container_name}$"; then
+    # Check if it exists
+    if docker ps -a --format '{{.Names}}' | grep -q "^${container_name}$"; then
+        echo "Starting existing Redis container..."
+        docker start $container_name
+    else
+        echo "Running new Redis container..."
+        docker run -d --rm --name $container_name -p 6379:6379 redis
+    fi
+else
+    echo "Redis container is already running."
+fi
+
 mvn compile dependency:build-classpath -Dmdep.outputFile=classpath.txt
 classpath=$(cat classpath.txt):target/classes
-jshell --class-path "$classpath" shell/startup.jsh
+jshell --class-path "$classpath" --startup shell/startup.jsh shell/init.jsh
