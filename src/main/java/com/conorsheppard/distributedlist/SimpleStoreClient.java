@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SimpleStoreClient implements StoreClient<String> {
+public class SimpleStoreClient implements StoreClient<String, String> {
     private final Map<String, String> store = new ConcurrentHashMap<>();
     private final Map<String, AtomicInteger> counters = new ConcurrentHashMap<>();
 

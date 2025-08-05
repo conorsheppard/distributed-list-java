@@ -1,7 +1,7 @@
 package com.conorsheppard.distributedlist;
 
-public interface StoreClient<E> {
-    E get(String key);
-    void set(String key, String value);
-    int incrementAndGet(String key);
+public interface StoreClient<K, V> {
+    V get(K key);
+    void set(K key, V value);
+    int incrementAndGet(K key);
 }

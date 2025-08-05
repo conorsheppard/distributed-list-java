@@ -3,7 +3,7 @@ package com.conorsheppard.distributedlist;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-public class RedisStoreClient implements StoreClient<String> {
+public class RedisStoreClient implements StoreClient<String, String> {
     private final JedisPool jedisPool;
 
     public RedisStoreClient(String host, int port) {

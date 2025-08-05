@@ -2,6 +2,9 @@ package com.conorsheppard;
 
 import com.conorsheppard.distributedlist.DistributedList;
 import com.conorsheppard.distributedlist.RedisStoreClient;
+import com.conorsheppard.distributedlist.StringSerializer;
+import com.conorsheppard.distributedlist.IntegerSerializer;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -39,7 +42,8 @@ class RedisStoreClientTest {
 
     @Test
     void testAddAndGetFromRedis() {
-        DistributedList<String> list = new DistributedList<>(storeClient, "test:list");
+        DistributedList<Integer, String> list = new DistributedList<>(
+            storeClient, "test:list", new IntegerSerializer(), new StringSerializer());
 
         list.add("dog");
         list.add("cat");
@@ -53,7 +57,8 @@ class RedisStoreClientTest {
 
     @Test
     void testRemoveFromRedis() {
-        DistributedList<String> list = new DistributedList<>(storeClient, "test:removal");
+        DistributedList<Integer, String> list = new DistributedList<>(
+            storeClient, "test:removal", new IntegerSerializer(), new StringSerializer());
 
         list.add("apple");
         list.add("banana");
@@ -68,8 +73,10 @@ class RedisStoreClientTest {
 
     @Test
     void testMultipleListsRedisIsolation() {
-        DistributedList<String> list1 = new DistributedList<>(storeClient, "list1");
-        DistributedList<String> list2 = new DistributedList<>(storeClient, "list2");
+        DistributedList<Integer, String> list1 = new DistributedList<>(
+            storeClient, "list1", new IntegerSerializer(), new StringSerializer());
+        DistributedList<Integer, String> list2 = new DistributedList<>(
+            storeClient, "list2", new IntegerSerializer(), new StringSerializer());
 
         list1.add("x");
         list2.add("y");

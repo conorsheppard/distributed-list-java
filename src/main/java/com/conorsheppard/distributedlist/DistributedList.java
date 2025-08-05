@@ -1,43 +1,62 @@
 package com.conorsheppard.distributedlist;
 
-import java.util.Objects;
-
-public class DistributedList<E> {
-    private final StoreClient<String> storeClient;
+public class DistributedList<K, V> {
+    private final StoreClient<String, String> storeClient;
     private final String listIdentifier;
+    private final Serializer<K> keySerializer;
+    private final Serializer<V> valueSerializer;
 
-    public DistributedList(StoreClient<String> storeClient, String listName) {
-        if (storeClient == null || listName == null || listName.isEmpty()) {
-            throw new IllegalArgumentException("StoreClient and listName must be non-null and non-empty.");
+    public DistributedList(StoreClient<String, String> storeClient, String listName, 
+                         Serializer<K> keySerializer, Serializer<V> valueSerializer) {
+        if (storeClient == null || listName == null || listName.isEmpty() || 
+            keySerializer == null || valueSerializer == null) {
+            throw new IllegalArgumentException("StoreClient, listName, keySerializer, and valueSerializer must be non-null and non-empty.");
         }
         this.storeClient = storeClient;
         this.listIdentifier = listName + ":";
+        this.keySerializer = keySerializer;
+        this.valueSerializer = valueSerializer;
     }
 
-    public E get(int index) {
-        String serialized = storeClient.get(listIdentifier + index);
-        // Assumes E is String for now (can add serialization later)
-        return (E) serialized;
+    public V get(K index) {
+        String serializedKey = keySerializer.serialize(index);
+        String serializedValue = storeClient.get(listIdentifier + serializedKey);
+        return serializedValue != null ? valueSerializer.deserialize(serializedValue) : null;
     }
 
-    public void add(E element) {
-        int index = storeClient.incrementAndGet(listIdentifier + "size") - 1;
-        storeClient.set(listIdentifier + index, Objects.toString(element));
+    public void add(V element) {
+        int size = size();
+        K index = keySerializer.deserialize(String.valueOf(size));
+        String serializedKey = keySerializer.serialize(index);
+        storeClient.set(listIdentifier + serializedKey, valueSerializer.serialize(element));
+        
+        // Update size
+        storeClient.set(listIdentifier + "size", String.valueOf(size + 1));
     }
 
-    public void remove(int index) {
-        // minus 1 since we're removing 1 element
-        int updatedSize = Integer.parseInt(storeClient.get(listIdentifier + "size")) - 1; // No type checks for brevity
-        // Set the updated post-removal list size
-        storeClient.set(listIdentifier + "size", String.valueOf(updatedSize));
-
-        for (int i = index; i < updatedSize; i++) {
-            String next = storeClient.get(listIdentifier + (i + 1));
-            storeClient.set(listIdentifier + i, next);
+    public void remove(K index) {
+        int currentSize = size();
+        if (currentSize == 0) return;
+        
+        // Get the last element
+        K lastIndex = keySerializer.deserialize(String.valueOf(currentSize - 1));
+        String lastSerializedKey = keySerializer.serialize(lastIndex);
+        String lastValue = storeClient.get(listIdentifier + lastSerializedKey);
+        
+        // Remove the target element
+        String serializedKey = keySerializer.serialize(index);
+        storeClient.set(listIdentifier + serializedKey, null);
+        
+        // If we're not removing the last element, move the last element to the removed position
+        if (!index.equals(lastIndex)) {
+            storeClient.set(listIdentifier + serializedKey, lastValue);
         }
-
-        // Remove last entry
-        storeClient.set(listIdentifier + updatedSize, null);
+        
+        // Remove the last element
+        storeClient.set(listIdentifier + lastSerializedKey, null);
+        
+        // Update size
+        storeClient.set(listIdentifier + "size", String.valueOf(currentSize - 1));
     }
 
     public int size() {

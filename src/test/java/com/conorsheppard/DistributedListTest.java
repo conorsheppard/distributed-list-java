@@ -3,6 +3,8 @@ package com.conorsheppard;
 import com.conorsheppard.distributedlist.DistributedList;
 import com.conorsheppard.distributedlist.SimpleStoreClient;
 import com.conorsheppard.distributedlist.StoreClient;
+import com.conorsheppard.distributedlist.StringSerializer;
+import com.conorsheppard.distributedlist.IntegerSerializer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -26,8 +28,9 @@ class DistributedListTest {
     @ParameterizedTest
     @MethodSource("listInputProvider")
     void testAddAndGet(String listName, List<String> items) {
-        StoreClient<String> storeClient = new SimpleStoreClient();
-        DistributedList<String> distributedList = new DistributedList<>(storeClient, listName);
+        StoreClient<String, String> storeClient = new SimpleStoreClient();
+        DistributedList<Integer, String> distributedList = new DistributedList<>(
+            storeClient, listName, new IntegerSerializer(), new StringSerializer());
 
         // Add items
         for (String item : items) {
@@ -45,8 +48,9 @@ class DistributedListTest {
 
     @Test
     void testRemove() {
-        StoreClient<String> storeClient = new SimpleStoreClient();
-        DistributedList<String> list = new DistributedList<>(storeClient, "removalTest");
+        StoreClient<String, String> storeClient = new SimpleStoreClient();
+        DistributedList<Integer, String> list = new DistributedList<>(
+            storeClient, "removalTest", new IntegerSerializer(), new StringSerializer());
 
         list.add("alpha");
         list.add("beta");
@@ -61,9 +65,11 @@ class DistributedListTest {
 
     @Test
     void testMultipleListsIsolation() {
-        StoreClient<String> storeClient = new SimpleStoreClient();
-        DistributedList<String> listA = new DistributedList<>(storeClient, "listA");
-        DistributedList<String> listB = new DistributedList<>(storeClient, "listB");
+        StoreClient<String, String> storeClient = new SimpleStoreClient();
+        DistributedList<Integer, String> listA = new DistributedList<>(
+            storeClient, "listA", new IntegerSerializer(), new StringSerializer());
+        DistributedList<Integer, String> listB = new DistributedList<>(
+            storeClient, "listB", new IntegerSerializer(), new StringSerializer());
 
         listA.add("A1");
         listB.add("B1");
@@ -73,5 +79,21 @@ class DistributedListTest {
 
         assertEquals(1, listA.size());
         assertEquals(1, listB.size());
+    }
+
+    @Test
+    void testGenericWithInteger() {
+        StoreClient<String, String> storeClient = new SimpleStoreClient();
+        DistributedList<Integer, Integer> intList = new DistributedList<>(
+            storeClient, "intList", new IntegerSerializer(), new IntegerSerializer());
+
+        intList.add(42);
+        intList.add(100);
+        intList.add(999);
+
+        assertEquals(3, intList.size());
+        assertEquals(Integer.valueOf(42), intList.get(0));
+        assertEquals(Integer.valueOf(100), intList.get(1));
+        assertEquals(Integer.valueOf(999), intList.get(2));
     }
 }
