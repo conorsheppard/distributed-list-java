@@ -22,7 +22,7 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Build dev container
-      uses: devcontainers/ci@v0
+      uses: devcontainers/ci@v0.3
       with:
         imageName: distributed-list-java
         platform: linux/amd64
