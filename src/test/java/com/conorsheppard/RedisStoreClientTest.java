@@ -63,10 +63,11 @@ class RedisStoreClientTest {
         list.add("apple");
         list.add("banana");
         list.add("cherry");
+        list.add("pear");
 
         list.remove(1); // remove "banana"
 
-        assertEquals(2, list.size());
+        assertEquals(3, list.size());
         assertEquals("apple", list.get(0));
         assertEquals("cherry", list.get(1));
     }

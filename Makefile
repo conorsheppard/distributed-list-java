@@ -20,6 +20,9 @@ test:
 run:
 	./shell/run
 
+ssh-redis:
+	docker exec -it redis redis-cli
+
 run-class:
 	mvn exec:java -Dexec.mainClass="com.conorsheppard.distributedlist.Example"
 
