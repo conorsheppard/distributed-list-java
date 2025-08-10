@@ -1,4 +1,4 @@
-package com.conorsheppard.distributedlist;
+package com.conorsheppard.distributedlist.serializers;
 
 public class DoubleSerializer implements Serializer<Double> {
     @Override

@@ -1,9 +1,9 @@
 package com.conorsheppard;
 
-import com.conorsheppard.distributedlist.DistributedList;
-import com.conorsheppard.distributedlist.RedisStoreClient;
-import com.conorsheppard.distributedlist.StringSerializer;
-import com.conorsheppard.distributedlist.IntegerSerializer;
+import com.conorsheppard.distributedlist.list.DistributedList;
+import com.conorsheppard.distributedlist.store.RedisStoreClient;
+import com.conorsheppard.distributedlist.serializers.StringSerializer;
+import com.conorsheppard.distributedlist.serializers.IntegerSerializer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.GenericContainer;

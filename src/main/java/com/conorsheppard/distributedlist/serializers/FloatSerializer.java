@@ -1,4 +1,4 @@
-package com.conorsheppard.distributedlist;
+package com.conorsheppard.distributedlist.serializers;
 
 public class FloatSerializer implements Serializer<Float> {
     @Override

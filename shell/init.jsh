@@ -1,6 +1,9 @@
-import com.conorsheppard.distributedlist.*;
+import com.conorsheppard.distributedlist.list.DistributedList;
+import com.conorsheppard.distributedlist.serializers.IntegerSerializer;
+import com.conorsheppard.distributedlist.serializers.StringSerializer;
+import com.conorsheppard.distributedlist.store.RedisStoreClient;
 
-var stringSerializer = new StringSerializer();
+    var stringSerializer = new StringSerializer();
 var intSerializer = new IntegerSerializer();
 
 var redisStoreClient = new RedisStoreClient("localhost", 6379);

@@ -1,4 +1,8 @@
-package com.conorsheppard.distributedlist;
+package com.conorsheppard.distributedlist.list;
+
+import com.conorsheppard.distributedlist.serializers.Serializer;
+import com.conorsheppard.distributedlist.serializers.SerializerFactory;
+import com.conorsheppard.distributedlist.store.StoreClient;
 
 public class DistributedList<K, V> {
     private final StoreClient<String, String> storeClient;
@@ -18,7 +22,7 @@ public class DistributedList<K, V> {
     public DistributedList(StoreClient<String, String> storeClient, String listName, 
                          Class<K> keyClass, Class<V> valueClass) {
         this(storeClient, listName, 
-             SerializerFactory.createSerializer(keyClass), 
+             SerializerFactory.createSerializer(keyClass),
              SerializerFactory.createSerializer(valueClass));
     }
 

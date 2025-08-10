@@ -97,6 +97,7 @@
                 <configuration>
                     <excludes>
                         <exclude>com/conorsheppard/distributedlist/Main.class</exclude>
+                        <exclude>com/conorsheppard/distributedlist/Example.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>

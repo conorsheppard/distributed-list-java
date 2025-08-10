@@ -1,4 +1,4 @@
-package com.conorsheppard.distributedlist;
+package com.conorsheppard.distributedlist.serializers;
 
 public class ShortSerializer implements Serializer<Short> {
     @Override

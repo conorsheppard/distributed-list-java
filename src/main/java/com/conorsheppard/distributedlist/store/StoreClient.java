@@ -1,4 +1,4 @@
-package com.conorsheppard.distributedlist;
+package com.conorsheppard.distributedlist.store;
 
 public interface StoreClient<K, V> {
     V get(K key);

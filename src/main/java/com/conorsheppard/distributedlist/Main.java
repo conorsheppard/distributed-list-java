@@ -1,5 +1,11 @@
 package com.conorsheppard.distributedlist;
 
+import com.conorsheppard.distributedlist.list.DistributedList;
+import com.conorsheppard.distributedlist.serializers.IntegerSerializer;
+import com.conorsheppard.distributedlist.serializers.StringSerializer;
+import com.conorsheppard.distributedlist.store.SimpleStoreClient;
+import com.conorsheppard.distributedlist.store.StoreClient;
+
 public class Main {
     public static void main(String[] args) {
         // Create store clients

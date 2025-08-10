@@ -1,5 +1,13 @@
 package com.conorsheppard.distributedlist;
 
+import com.conorsheppard.distributedlist.list.DistributedList;
+import com.conorsheppard.distributedlist.model.Cat;
+import com.conorsheppard.distributedlist.serializers.IntegerSerializer;
+import com.conorsheppard.distributedlist.serializers.SerializerFactory;
+import com.conorsheppard.distributedlist.serializers.StringSerializer;
+import com.conorsheppard.distributedlist.store.SimpleStoreClient;
+import com.conorsheppard.distributedlist.store.StoreClient;
+
 /**
  * Example demonstrating how the SerializerFactory pattern simplifies
  * DistributedList usage with different data types.
@@ -13,7 +21,7 @@ public class Example {
         // OLD WAY - Required explicit serializers
         DistributedList<Integer, String> oldWay = new DistributedList<>(
             store, "old-list", 
-            new IntegerSerializer(), 
+            new IntegerSerializer(),
             new StringSerializer()
         );
         

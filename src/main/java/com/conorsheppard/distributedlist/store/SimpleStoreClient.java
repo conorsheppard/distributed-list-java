@@ -1,4 +1,4 @@
-package com.conorsheppard.distributedlist;
+package com.conorsheppard.distributedlist.store;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

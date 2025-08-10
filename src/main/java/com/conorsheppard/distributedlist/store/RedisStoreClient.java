@@ -1,4 +1,4 @@
-package com.conorsheppard.distributedlist;
+package com.conorsheppard.distributedlist.store;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

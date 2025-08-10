@@ -1,10 +1,10 @@
 package com.conorsheppard;
 
-import com.conorsheppard.distributedlist.DistributedList;
-import com.conorsheppard.distributedlist.SimpleStoreClient;
-import com.conorsheppard.distributedlist.StoreClient;
-import com.conorsheppard.distributedlist.StringSerializer;
-import com.conorsheppard.distributedlist.IntegerSerializer;
+import com.conorsheppard.distributedlist.list.DistributedList;
+import com.conorsheppard.distributedlist.store.SimpleStoreClient;
+import com.conorsheppard.distributedlist.store.StoreClient;
+import com.conorsheppard.distributedlist.serializers.StringSerializer;
+import com.conorsheppard.distributedlist.serializers.IntegerSerializer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
