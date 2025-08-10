@@ -62,22 +62,25 @@ public class DistributedList<K, V> {
         int currentSize = size();
         if (currentSize == 0) return;
         
-        // Get the last element
-        K lastIndex = keySerializer.deserialize(String.valueOf(currentSize - 1));
-        String lastSerializedKey = keySerializer.serialize(lastIndex);
-        String lastValue = storeClient.get(listIdentifier + lastSerializedKey);
+        // Convert index to int for position checking
+        int targetIndex = Integer.parseInt(keySerializer.serialize(index));
+        if (targetIndex < 0 || targetIndex >= currentSize) return;
         
-        // Remove the target element
-        String serializedKey = keySerializer.serialize(index);
-        storeClient.set(listIdentifier + serializedKey, null);
-        
-        // If we're not removing the last element, move the last element to the removed position
-        if (!index.equals(lastIndex)) {
-            storeClient.set(listIdentifier + serializedKey, lastValue);
+        // Shift all elements after the removed index left by one position
+        for (int i = targetIndex; i < currentSize - 1; i++) {
+            K currentKey = keySerializer.deserialize(String.valueOf(i));
+            K nextKey = keySerializer.deserialize(String.valueOf(i + 1));
+            
+            // Get the next element
+            String nextValue = storeClient.get(listIdentifier + keySerializer.serialize(nextKey));
+            
+            // Move it to the current position
+            storeClient.set(listIdentifier + keySerializer.serialize(currentKey), nextValue);
         }
         
-        // Remove the last element
-        storeClient.set(listIdentifier + lastSerializedKey, null);
+        // Remove the last element (now duplicated)
+        K lastIndex = keySerializer.deserialize(String.valueOf(currentSize - 1));
+        storeClient.set(listIdentifier + keySerializer.serialize(lastIndex), null);
         
         // Update size
         storeClient.set(listIdentifier + "size", String.valueOf(currentSize - 1));
