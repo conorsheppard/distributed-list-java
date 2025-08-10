@@ -6,6 +6,26 @@ public class DistributedList<K, V> {
     private final Serializer<K> keySerializer;
     private final Serializer<V> valueSerializer;
 
+    /**
+     * Constructor that automatically creates serializers using SerializerFactory.
+     * This eliminates the need to manually specify serializers for common types.
+     * 
+     * @param storeClient the storage client
+     * @param listName the name of the list
+     * @param keyClass the class of the key type
+     * @param valueClass the class of the value type
+     */
+    public DistributedList(StoreClient<String, String> storeClient, String listName, 
+                         Class<K> keyClass, Class<V> valueClass) {
+        this(storeClient, listName, 
+             SerializerFactory.createSerializer(keyClass), 
+             SerializerFactory.createSerializer(valueClass));
+    }
+
+    /**
+     * Constructor that requires explicit serializers.
+     * Use this when you need custom serialization behavior.
+     */
     public DistributedList(StoreClient<String, String> storeClient, String listName, 
                          Serializer<K> keySerializer, Serializer<V> valueSerializer) {
         if (storeClient == null || listName == null || listName.isEmpty() || 
