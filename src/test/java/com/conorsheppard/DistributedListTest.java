@@ -210,21 +210,39 @@ class DistributedListTest {
     }
 
     @Test
-    void testSerializerFactoryWithBooleanAndCharacter() {
+    void testSerializerFactoryWithShortAndCharacter() {
         StoreClient<String, String> store = new SimpleStoreClient();
-        
-        DistributedList<Boolean, Character> boolCharList = new DistributedList<>(
-            store, "bool-chars", 
-            Boolean.class, 
-            Character.class
+
+        DistributedList<Short, Character> boolCharList = new DistributedList<>(
+                store, "bool-chars",
+                Short.class,
+                Character.class
         );
 
         boolCharList.add('A');
         boolCharList.add('B');
 
         assertEquals(2, boolCharList.size());
-        assertEquals('A', boolCharList.get(false));
-        assertEquals('B', boolCharList.get(true));
+        assertEquals('A', boolCharList.get((short) 0));
+        assertEquals('B', boolCharList.get((short) 1));
+    }
+
+    @Test
+    void testSerializerFactoryWithFloatAndByte() {
+        StoreClient<String, String> store = new SimpleStoreClient();
+
+        DistributedList<Float, Byte> boolCharList = new DistributedList<>(
+                store, "bool-chars",
+                Float.class,
+                Byte.class
+        );
+
+        boolCharList.add((byte) 'A');
+        boolCharList.add((byte) 'B');
+
+        assertEquals(2, boolCharList.size());
+        assertEquals((byte) 'A', boolCharList.get(0f));
+        assertEquals((byte) 'B', boolCharList.get(1f));
     }
 
     @Test
