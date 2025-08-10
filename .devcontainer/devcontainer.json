@@ -1,0 +1,39 @@
+{
+    "name": "Distributed List Java",
+    "image": "mcr.microsoft.com/devcontainers/java:21",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "21",
+            "installMaven": true
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vscjava.vscode-java-pack",
+                "vscjava.vscode-maven",
+                "ms-vscode.vscode-json",
+                "redhat.java",
+                "vscjava.vscode-java-debug",
+                "vscjava.vscode-java-test",
+                "vscjava.vscode-java-dependency"
+            ],
+            "settings": {
+                "java.configuration.updateBuildConfiguration": "automatic",
+                "java.compile.nullAnalysis.mode": "automatic",
+                "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+                "java.format.settings.profile": "GoogleStyle"
+            }
+        }
+    },
+    "forwardPorts": [6379],
+    "portsAttributes": {
+        "6379": {
+            "label": "Redis",
+            "onAutoForward": "notify"
+        }
+    },
+    "postCreateCommand": "mvn clean compile",
+    "remoteUser": "vscode"
+} 

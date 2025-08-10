@@ -1,0 +1,32 @@
+name: Dev Container
+
+on:
+  push:
+    paths:
+      - '.devcontainer/**'
+      - 'pom.xml'
+      - 'src/**'
+    branches: [ main ]
+  pull_request:
+    paths:
+      - '.devcontainer/**'
+      - 'pom.xml'
+      - 'src/**'
+    branches: [ main ]
+
+jobs:
+  devcontainer:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build dev container
+      uses: devcontainers/ci@v0
+      with:
+        imageName: distributed-list-java
+        platform: linux/amd64
+        push: false
+        user: vscode
+        workspacePath: src
+        additionalCacheFroms: mcr.microsoft.com/devcontainers/java:21 

@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run Example",
+            "request": "launch",
+            "mainClass": "com.conorsheppard.distributedlist.Example",
+            "projectName": "distributed-list-java",
+            "vmArgs": "-Dfile.encoding=UTF-8"
+        },
+        {
+            "type": "java",
+            "name": "Debug Tests",
+            "request": "launch",
+            "mainClass": "org.junit.platform.console.ConsoleLauncher",
+            "projectName": "distributed-list-java",
+            "args": [
+                "--class-path",
+                "${workspaceFolder}/target/test-classes:${workspaceFolder}/target/classes",
+                "--scan-class-path"
+            ],
+            "vmArgs": "-Dfile.encoding=UTF-8"
+        },
+        {
+            "type": "java",
+            "name": "Debug DistributedListTest",
+            "request": "launch",
+            "mainClass": "com.conorsheppard.DistributedListTest",
+            "projectName": "distributed-list-java",
+            "vmArgs": "-Dfile.encoding=UTF-8"
+        }
+    ]
+} 

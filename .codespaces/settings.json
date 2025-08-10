@@ -1,0 +1,36 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+    "java.format.settings.profile": "GoogleStyle",
+    "java.saveActions.organizeImports": true,
+    "java.completion.importOrder": [
+        "java",
+        "javax",
+        "com",
+        "org"
+    ],
+    "java.test.config": {
+        "vmargs": [
+            "-Dfile.encoding=UTF-8"
+        ]
+    },
+    "files.exclude": {
+        "**/target": true,
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "search.exclude": {
+        "**/target": true,
+        "**/node_modules": true
+    },
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "maven.executable.path": "/usr/local/bin/mvn",
+    "java.home": "/usr/local/openjdk-21"
+} 

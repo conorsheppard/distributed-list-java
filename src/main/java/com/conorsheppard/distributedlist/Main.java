@@ -1,6 +1,6 @@
 package com.conorsheppard.distributedlist;
 
-public class Example {
+public class Main {
     public static void main(String[] args) {
         // Create store clients
         StoreClient<String, String> stringStore = new SimpleStoreClient();

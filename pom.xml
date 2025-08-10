@@ -13,6 +13,7 @@
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <lombok.version>1.18.38</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -75,10 +76,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
                 <configuration>
                     <source>24</source>
                     <target>24</target>
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <release>24</release>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -87,7 +96,7 @@
                 <version>0.8.13</version>
                 <configuration>
                     <excludes>
-                        <exclude>com/conorsheppard/Main.class</exclude>
+                        <exclude>com/conorsheppard/distributedlist/Main.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
