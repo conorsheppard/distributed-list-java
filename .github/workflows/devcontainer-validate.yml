@@ -21,16 +21,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Setup Java 21
-      uses: actions/setup-java@v4
+    - name: Setup Maven Action
+      uses: s4u/setup-maven-action@v1.18.0
       with:
         java-version: '21'
-        distribution: 'temurin'
-    
-    - name: Setup Maven
-      uses: actions/setup-maven@v3
-      with:
-        maven-version: '3.9'
+        maven-version: '3.9.9'
     
     - name: Validate dev container config
       run: |
