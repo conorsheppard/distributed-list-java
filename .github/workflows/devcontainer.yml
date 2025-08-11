@@ -27,6 +27,4 @@ jobs:
         imageName: distributed-list-java
         platform: linux/amd64
         push: false
-        user: vscode
-        workspacePath: src
-        additionalCacheFroms: mcr.microsoft.com/devcontainers/java:24 
+        cacheFrom: mcr.microsoft.com/devcontainers/java:21
