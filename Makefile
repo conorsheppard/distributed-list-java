@@ -20,6 +20,15 @@ test:
 run:
 	./shell/run
 
+ssh-redis:
+	docker exec -it redis redis-cli
+
+run-class:
+	mvn exec:java -Dexec.mainClass="com.conorsheppard.distributedlist.Example"
+
+run-jar:
+	java -jar target/distributed-list-java-1.0-SNAPSHOT.jar
+
 test-coverage:
 	mvn clean org.jacoco:jacoco-maven-plugin:0.8.13:prepare-agent verify org.jacoco:jacoco-maven-plugin:0.8.13:report
 
