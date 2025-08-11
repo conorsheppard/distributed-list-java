@@ -28,3 +28,4 @@ jobs:
         platform: linux/amd64
         push: false
         cacheFrom: mcr.microsoft.com/devcontainers/java:21
+        runCmd: mvn clean compile
