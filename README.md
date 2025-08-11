@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/afdba511-9cc7-4c3f-9ca8-0aefbdbc448e
 
 1. Click the "Code" button on this repository
 2. Select "Create codespace on main"
-3. Wait for the environment to build (includes Java 24, Maven, and Docker)
+3. Wait for the environment to build (includes Java 21, Maven, and Docker)
 4. Run the example:
 
 ```bash
@@ -38,7 +38,7 @@ mvn compile exec:java -Dexec.mainClass="com.conorsheppard.distributedlist.Exampl
 ### Local Development
 
 #### Prerequisites
-- Java 24
+- Java 21
 - Maven 3.6+
 - Docker (for Redis)
 

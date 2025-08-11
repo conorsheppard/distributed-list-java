@@ -14,7 +14,7 @@ This guide will help you get started with the Distributed List Java project in G
 ### 2. Wait for Environment Setup
 
 The Codespace will automatically:
-- Install Java 24
+- Install Java 21
 - Install Maven
 - Install Docker (for Redis tests)
 - Install VS Code Java extensions
@@ -42,7 +42,7 @@ mvn clean compile
 ## Environment Features
 
 ### Pre-installed Tools
-- **Java 24**: Latest Java version
+- **Java 21**: Latest LTS version
 - **Maven 3.9+**: Build tool
 - **Docker**: For Redis container tests
 - **VS Code Extensions**: Java development tools

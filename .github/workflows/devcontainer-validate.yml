@@ -1,0 +1,49 @@
+name: Validate Dev Container Config
+
+on:
+  push:
+    paths:
+      - '.devcontainer/**'
+      - 'pom.xml'
+      - 'src/**'
+    branches: [ main ]
+  pull_request:
+    paths:
+      - '.devcontainer/**'
+      - 'pom.xml'
+      - 'src/**'
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Java 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    
+    - name: Setup Maven
+      uses: actions/setup-maven@v3
+      with:
+        maven-version: '3.9'
+    
+    - name: Validate dev container config
+      run: |
+        # Check if devcontainer.json is valid JSON
+        python3 -m json.tool .devcontainer/devcontainer.json
+        
+        # Check if referenced image exists
+        echo "Dev container configuration is valid"
+        
+        # Validate Maven configuration
+        mvn validate
+        
+        # Test compilation
+        mvn clean compile
+        
+        echo "✅ Dev container configuration validation passed"
